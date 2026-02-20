@@ -7,8 +7,15 @@ use Livewire\Component;
 
 new class extends Component
 {
+    public $tags = [];
+
     #[Validate('required|max:30')]
     public $name = '';
+
+    public function mount()
+    {
+        $this->tags = auth()->user()->tags;
+    }
 
     public function save(Request $request)
     {
