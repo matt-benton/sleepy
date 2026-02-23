@@ -14,4 +14,11 @@ new class extends Component
         $this->tag = $tag;
         $this->tags = auth()->user()->tags;
     }
+
+    public function delete()
+    {
+        $this->tag->delete();
+
+        return back();
+    }
 };
