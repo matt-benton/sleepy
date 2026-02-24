@@ -21,4 +21,11 @@ new class extends Component
 
         return back();
     }
+
+    public function restore()
+    {
+        $this->tag->restore();
+
+        return back();
+    }
 };

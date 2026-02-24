@@ -15,7 +15,7 @@
         <div class="space-y-4">
             <flux:heading size="xl" level="2">{{ $tag->name }}</flux:heading>
             @if ($tag->trashed())
-                <flux:card class="bg-red-500 flex justify-between">
+                <flux:card class="bg-red-200 dark:bg-red-400 flex justify-between">
                     <div class="flex items-center">
                         <flux:icon.exclamation-triangle variant="mini" class="mr-2" />
                         <flux:text>
@@ -23,7 +23,7 @@
                         </flux:text>
                     </div>
                     <div class="flex items-center">
-                        <flux:button size="sm" variant="ghost">Restore</flux:button>
+                        <flux:button size="sm" variant="ghost" wire:click="restore">Restore</flux:button>
                     </div>
                 </flux:card>
             @else

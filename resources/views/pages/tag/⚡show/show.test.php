@@ -24,3 +24,17 @@ it('can delete a tag', function () {
 
     expect($tag->fresh()->trashed())->toBeTrue();
 });
+
+it('can restore a tag', function () {
+    $user = User::factory()
+        ->has(Tag::factory())
+        ->create();
+    $tag = $user->tags[0];
+    $tag->delete();
+
+    Livewire::actingAs($user)
+        ->test('pages::tag.show', ['tag' => $tag])
+        ->call('restore');
+
+    expect($tag->fresh()->trashed())->toBeFalse();
+});
