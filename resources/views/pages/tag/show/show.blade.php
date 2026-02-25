@@ -1,16 +1,5 @@
 <div>
-    <flux:sidebar sticky>
-        <flux:sidebar.nav>
-            <flux:sidebar.item href="/tags/create" icon="plus" wire:navigate>
-                New Tag
-            </flux:sidebar.item>
-            @foreach ($tags as $t)
-                <flux:sidebar.item href="/tags/{{ $t->id }}" icon="tag" wire:navigate>
-                    {{ $t->name }}
-                </flux:sidebar.item>
-            @endforeach
-        </flux:sidebar.nav>
-    </flux:sidebar>
+    <livewire:tag.sidebar :tags="$tags" />
     <flux:main container>
         <div class="space-y-4">
             <flux:heading size="xl" level="2">{{ $tag->name }}</flux:heading>

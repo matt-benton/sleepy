@@ -14,6 +14,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::livewire('/tags/create', 'pages::tag.create')->name('tag.create');
     Route::livewire('/tags', 'pages::tag.index')->name('tag.index');
     Route::livewire('/tags/{tag}', 'pages::tag.show')->name('tag.show')->withTrashed();
+    Route::livewire('/tags/{tag}/edit', 'pages::tag.edit')->name('tag.edit');
 });
 
 require __DIR__.'/settings.php';
