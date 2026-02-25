@@ -20,7 +20,7 @@
                     <flux:heading size="lg">Sleeps</flux:heading>
                     <flux:text class="mt-2">List of sleeps will go here</flux:text>
                 </flux:card>
-                <flux:button href="/tags/{{ $tag->id }}/edit" variant="primary" icon="pencil">
+                <flux:button href="/tags/{{ $tag->id }}/edit" variant="primary" icon="pencil" wire:navigate>
                     Rename
                 </flux:button>
                 <flux:button icon="trash" class="cursor-pointer" wire:click="delete">
