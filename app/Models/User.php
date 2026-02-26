@@ -67,4 +67,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Tag::class);
     }
+
+    public function sleepEntries(): HasMany
+    {
+        return $this->hasMany(SleepEntry::class);
+    }
 }
