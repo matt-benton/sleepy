@@ -13,6 +13,14 @@ class SleepEntry extends Model
     /** @use HasFactory<\Database\Factories\SleepEntryFactory> */
     use HasFactory;
 
+    protected $fillable = [
+        'in_bed_by',
+        'awake_at',
+        'temperature',
+        'rating',
+        'notes',
+    ];
+
     protected function casts()
     {
         return [

@@ -17,6 +17,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::livewire('/tags/{tag}/edit', 'pages::tag.edit')->name('tag.edit');
 
     Route::livewire('/sleep_entries', 'pages::sleep_entry.index')->name('sleep_entry.index');
+    Route::livewire('/sleep_entries/create', 'pages::sleep_entry.create')->name('sleep_entry.create');
 });
 
 require __DIR__.'/settings.php';

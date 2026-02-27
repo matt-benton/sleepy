@@ -64,7 +64,7 @@
         <flux:card class="space-y-4">
             <flux:heading size="lg">No entries found</flux:heading>
             <flux:text>Create your first sleep entry</flux:text>
-            <flux:button variant="primary" icon="pencil">Get Started</flux:button>
+            <flux:button variant="primary" icon="pencil" href="/sleep_entries/create">Get Started</flux:button>
         </flux:card>
     @endif
 </div>
