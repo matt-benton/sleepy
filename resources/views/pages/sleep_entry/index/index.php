@@ -8,6 +8,6 @@ new class extends Component
 
     public function mount()
     {
-        $this->sleepEntries = auth()->user()->sleepEntries;
+        $this->sleepEntries = auth()->user()->sleepEntries()->latest()->get();
     }
 };

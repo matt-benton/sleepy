@@ -1,4 +1,7 @@
 <div class="max-w-md mx-auto space-y-5">
+    <div class="flex justify-end">
+        <flux:button variant="primary" icon="plus" href="/sleep_entries/create" wire:navigate>New Entry</flux:button>
+    </div>
     @foreach ($sleepEntries as $entry)
         <div class="space-y-3">
             <flux:heading size="lg">
@@ -23,7 +26,8 @@
                 <flux:text size="sm"><i>{{ $entry->temperature }}&deg;F</i></flux:text>
             @endif
 
-            <flux:text>{{ $entry->notes }}</flux:text>
+            <!-- NEED TO SANITIZE THIS -->
+            <flux:text>{!! $entry->notes !!}</flux:text>
             <div class="flex">
                 @if ($entry->rating)
                     <flux:icon.star variant="solid" />
