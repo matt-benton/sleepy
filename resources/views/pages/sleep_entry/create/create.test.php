@@ -1,15 +1,19 @@
 <?php
 
+use App\Models\Tag;
 use App\Models\User;
 use Livewire\Livewire;
 
 it('renders successfully', function () {
-    Livewire::test('pages::sleep_entry.create')
+    Livewire::actingAs(User::factory()->make())
+        ->test('pages::sleep_entry.create')
         ->assertStatus(200);
 });
 
 it('can create a sleep entry', function () {
-    $user = User::factory()->create();
+    $user = User::factory()
+        ->has(Tag::factory()->count(5))
+        ->create();
 
     expect($user->sleepEntries()->count())->toBe(0);
 
@@ -22,6 +26,7 @@ it('can create a sleep entry', function () {
         ->set('temperature', '67')
         ->set('rating', '5')
         ->set('notes', 'Had a wonderful sleep last night')
+        ->set('tagIds', [$user->tags[1]->id, $user->tags[4]->id])
         ->call('save');
 
     expect($user->sleepEntries()->count())->toBe(1);
@@ -33,4 +38,10 @@ it('can create a sleep entry', function () {
     expect($newSleepEntry->temperature)->toBe(67);
     expect($newSleepEntry->rating)->toBe(5);
     expect($newSleepEntry->notes)->toBe('Had a wonderful sleep last night');
+
+    expect($newSleepEntry->tags->pluck('id'))->toContain($user->tags[1]->id);
+    expect($newSleepEntry->tags->pluck('id'))->toContain($user->tags[4]->id);
+    expect($newSleepEntry->tags->pluck('id'))->not()->toContain($user->tags[0]->id);
+    expect($newSleepEntry->tags->pluck('id'))->not()->toContain($user->tags[2]->id);
+    expect($newSleepEntry->tags->pluck('id'))->not()->toContain($user->tags[3]->id);
 });

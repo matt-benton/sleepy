@@ -69,6 +69,14 @@
             </div>
             <flux:error name="rating" />
         </flux:field>
+        <flux:field>
+            <flux:label>Tags</flux:table>
+            <flux:pillbox multiple searchable placeholder="Choose tags..." wire:model="tagIds">
+                @foreach ($tags as $tag)
+                    <flux:pillbox.option value="{{ $tag->id }}">{{ $tag->name }}</flux:pillbox.option>
+                @endforeach
+            </flux:pillbox>
+        </flux:field>
         <div class="flex gap-1 justify-end">
             <flux:button wire:click="save" variant="primary" icon="pencil-square">Save</flux:button>
         </div>

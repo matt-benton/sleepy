@@ -60,6 +60,11 @@
                 @endif
             </div>
         </div>
+
+        @foreach ($entry->tags as $tag)
+            <flux:badge rounded>{{ $tag->name }}</flux:badge>
+        @endforeach
+
         @unless ($loop->last)
             <flux:separator />
         @endunless
