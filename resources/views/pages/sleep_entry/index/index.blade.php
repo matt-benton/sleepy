@@ -5,7 +5,7 @@
     @foreach ($sleepEntries as $entry)
         <div class="space-y-3">
             <flux:heading size="lg">
-                {{ $entry->sleep_date }}
+                <flux:link href="/sleep_entries/{{ $entry->id }}" wire:navigate>{{ $entry->sleep_date }}</flux:link>
             </flux:heading>
 
             @if ($entry->in_bed_by && $entry->awake_at)
