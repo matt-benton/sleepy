@@ -60,8 +60,12 @@
             </div>
         </div>
 
-        @foreach ($sleepEntry->tags as $tag)
-            <flux:badge rounded>{{ $tag->name }}</flux:badge>
-        @endforeach
+        <div>
+            @foreach ($sleepEntry->tags as $tag)
+                <flux:badge rounded>{{ $tag->name }}</flux:badge>
+            @endforeach
+        </div>
+
+        <flux:button href="/sleep_entries/{{ $sleepEntry->id }}/edit" icon="pencil">Edit</flux:button>
     </div>
 </div>

@@ -36,7 +36,7 @@ class SleepEntryPolicy
      */
     public function update(User $user, SleepEntry $sleepEntry): bool
     {
-        return false;
+        return $user->id === $sleepEntry->user_id;
     }
 
     /**
@@ -44,7 +44,7 @@ class SleepEntryPolicy
      */
     public function delete(User $user, SleepEntry $sleepEntry): bool
     {
-        return false;
+        return $user->id === $sleepEntry->user_id;
     }
 
     /**
@@ -52,7 +52,7 @@ class SleepEntryPolicy
      */
     public function restore(User $user, SleepEntry $sleepEntry): bool
     {
-        return false;
+        return $user->id === $sleepEntry->user_id;
     }
 
     /**
