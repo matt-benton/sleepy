@@ -66,6 +66,6 @@
             @endforeach
         </div>
 
-        <flux:button href="/sleep_entries/{{ $sleepEntry->id }}/edit" icon="pencil">Edit</flux:button>
+        <flux:button href="/sleep_entries/{{ $sleepEntry->id }}/edit" icon="pencil" wire:navigate>Edit</flux:button>
     </div>
 </div>
