@@ -40,41 +40,7 @@
             <flux:field>
                 <flux:editor label="Notes" wire:model="notes" />
             </flux:field>
-            <flux:field>
-                <flux:label>Rating</flux:label>
-                <div class="flex">
-                    @if ($this->rating >= 1)
-                        <flux:icon.star variant="solid" wire:click="setRating(1)" />
-                    @else
-                        <flux:icon.star wire:click="setRating(1)" />
-                    @endif
-
-                    @if ($this->rating >= 2)
-                        <flux:icon.star variant="solid" wire:click="setRating(2)" />
-                    @else
-                        <flux:icon.star wire:click="setRating(2)" />
-                    @endif
-
-                    @if ($this->rating >= 3)
-                        <flux:icon.star variant="solid" wire:click="setRating(3)" />
-                    @else
-                        <flux:icon.star wire:click="setRating(3)" />
-                    @endif
-
-                    @if ($this->rating >= 4)
-                        <flux:icon.star variant="solid" wire:click="setRating(4)" />
-                    @else
-                        <flux:icon.star wire:click="setRating(4)" />
-                    @endif
-
-                    @if ($this->rating === 5)
-                        <flux:icon.star variant="solid" wire:click="setRating(5)" />
-                    @else
-                        <flux:icon.star wire:click="setRating(5)" />
-                    @endif
-                </div>
-                <flux:error name="rating" />
-            </flux:field>
+            <livewire:sleep_entry.rating_setter :rating="$this->rating" />
             <flux:field>
                 <flux:label>Tags</flux:table>
                 <flux:pillbox multiple searchable placeholder="Choose tags..." wire:model="tagIds">

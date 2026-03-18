@@ -1,5 +1,6 @@
 <?php
 
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 new class extends Component
@@ -77,6 +78,7 @@ new class extends Component
         $this->awakeAtTime = '';
     }
 
+    #[On('update-rating')]
     public function setRating($rating)
     {
         $this->rating = $rating;
