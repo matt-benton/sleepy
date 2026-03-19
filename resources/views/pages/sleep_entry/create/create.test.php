@@ -27,6 +27,10 @@ it('can create a sleep entry', function () {
         ->set('rating', '5')
         ->set('notes', 'Had a wonderful sleep last night')
         ->set('tagIds', [$user->tags[1]->id, $user->tags[4]->id])
+        ->set('keyPoints', [
+            ['is_positive' => 1, 'text' => 'test 1'],
+            ['is_positive' => 0, 'text' => 'test 2'],
+        ])
         ->call('save');
 
     expect($user->sleepEntries()->count())->toBe(1);
@@ -44,4 +48,29 @@ it('can create a sleep entry', function () {
     expect($newSleepEntry->tags->pluck('id'))->not()->toContain($user->tags[0]->id);
     expect($newSleepEntry->tags->pluck('id'))->not()->toContain($user->tags[2]->id);
     expect($newSleepEntry->tags->pluck('id'))->not()->toContain($user->tags[3]->id);
+    expect($newSleepEntry->keyPoints->count())->toBe(2);
+});
+
+it('can add a key point', function () {
+    Livewire::actingAs(User::factory()->make())
+        ->test('pages::sleep_entry.create')
+        ->set('newKeyPointPositive', 0)
+        ->set('newKeyPointText', 'test')
+        ->call('addKeyPoint')
+        ->assertSet('keyPoints', [['is_positive' => 0, 'text' => 'test']]);
+});
+
+it('can remove a key point', function () {
+    Livewire::actingAs(User::factory()->make())
+        ->test('pages::sleep_entry.create')
+        ->set('keyPoints', [
+            ['is_positive' => 1, 'text' => 'test 1'],
+            ['is_positive' => 0, 'text' => 'test 2'],
+            ['is_positive' => 0, 'text' => 'test 3'],
+        ])
+        ->call('removeKeyPoint', 1)
+        ->assertSet('keyPoints', [
+            ['is_positive' => 1, 'text' => 'test 1'],
+            ['is_positive' => 0, 'text' => 'test 3'],
+        ]);
 });

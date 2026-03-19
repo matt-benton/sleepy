@@ -61,6 +61,16 @@
         </div>
 
         <div>
+            @foreach ($sleepEntry->keyPoints as $point)
+                @if ($point->is_positive)
+                    <p><flux:text color="green">+ {{ $point->text }}</flux:text></p>
+                @else
+                    <p><flux:text color="red">- {{ $point->text }}</flux:text></p>
+                @endif
+            @endforeach
+        </div>
+
+        <div>
             @foreach ($sleepEntry->tags as $tag)
                 <flux:badge rounded>{{ $tag->name }}</flux:badge>
             @endforeach

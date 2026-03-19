@@ -36,6 +36,36 @@
         </flux:field>
         <livewire:sleep_entry.rating_setter :rating="$this->rating" />
         <flux:field>
+            <flux:label>Pros/Cons</flux:label>
+            <flux:input.group>
+                <flux:select class="max-w-fit" wire:model="newKeyPointPositive">
+                    <flux:select.option value="1">+</flux:select.option>
+                    <flux:select.option value="0">-</flux:select.option>
+                </flux:select>
+                <flux:input wire:model="newKeyPointText" />
+                <flux:button icon="plus" wire:click="addKeyPoint" />
+            </flux:input.group>
+        </flux:field>
+
+        @foreach ($keyPoints as $point)
+            @if ($point['is_positive'])
+                <flux:callout variant="success" icon="plus-circle" wire:key="{{ $loop->index }}">
+                    {{ $point['text'] }}
+                    <x-slot name="controls">
+                        <flux:button icon="x-mark" variant="ghost" wire:click="removePoint({{ $loop->index }})" />
+                    </x-slot>
+                </flux:callout>
+            @else
+                <flux:callout variant="danger" icon="minus-circle" wire:key="{{ $loop->index }}">
+                    {{ $point['text'] }}
+                    <x-slot name="controls">
+                        <flux:button icon="x-mark" variant="ghost" wire:click="removePoint({{ $loop->index }})" />
+                    </x-slot>
+                </flux:callout>
+            @endif
+        @endforeach
+
+        <flux:field>
             <flux:label>Tags</flux:table>
             <flux:pillbox multiple searchable placeholder="Choose tags..." wire:model="tagIds">
                 @foreach ($tags as $tag)

@@ -23,6 +23,12 @@ new class extends Component
 
     public $tags = [];
 
+    public $keyPoints = [];
+
+    public $newKeyPointPositive;
+
+    public string $newKeyPointText = '';
+
     public function mount()
     {
         $yesterdayAt10Pm = now()->subDay()->setTime(22, 00, 00);
@@ -33,6 +39,8 @@ new class extends Component
         $this->awakeAtTime = $todayAt6Am->format('H:i');
 
         $this->tags = auth()->user()->tags;
+
+        $this->newKeyPointPositive = 1;
     }
 
     protected function rules()
@@ -46,6 +54,9 @@ new class extends Component
             'rating' => 'numeric|between:1,5',
             'tagIds' => 'array',
             'tagIds.*' => 'exists:tags,id',
+            'keyPoints' => 'array',
+            'keyPoints.*.is_positive' => 'boolean',
+            'keyPoints.*.text' => 'required',
         ];
     }
 
@@ -62,6 +73,7 @@ new class extends Component
         ]);
 
         $sleepEntry->tags()->attach($this->tagIds);
+        $sleepEntry->keyPoints()->createMany($this->keyPoints);
 
         return redirect()->route('sleep_entry.index');
     }
@@ -82,5 +94,25 @@ new class extends Component
     public function setRating($rating)
     {
         $this->rating = $rating;
+    }
+
+    public function addKeyPoint()
+    {
+        array_push(
+            $this->keyPoints,
+            ['is_positive' => $this->newKeyPointPositive, 'text' => $this->newKeyPointText],
+        );
+
+        $this->resetNewPoint();
+    }
+
+    public function removeKeyPoint($index)
+    {
+        array_splice($this->keyPoints, $index, 1);
+    }
+
+    private function resetNewPoint()
+    {
+        $this->newKeyPointText = '';
     }
 };
