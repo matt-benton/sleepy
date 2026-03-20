@@ -21,4 +21,13 @@ class KeyPointFactory extends Factory
             'text' => $this->faker->sentence,
         ];
     }
+
+    public function positive(): Factory
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'is_positive' => 1,
+            ];
+        });
+    }
 }

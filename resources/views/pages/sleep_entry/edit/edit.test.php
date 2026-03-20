@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\KeyPoint;
 use App\Models\SleepEntry;
 use App\Models\Tag;
 use App\Models\User;
@@ -69,14 +70,14 @@ it('can update a sleep entry', function () {
 
     Livewire::actingAs($sleepEntry->user)
         ->test('pages::sleep_entry.edit', ['sleepEntry' => $sleepEntry])
-        ->set('inBedByDate', '2026-01-01')
-        ->set('inBedByTime', '20:30')
-        ->set('awakeAtDate', '2026-01-02')
-        ->set('awakeAtTime', '7:35')
-        ->set('temperature', '71')
-        ->set('rating', '2')
-        ->set('notes', '<p>This is a test</p>')
-        ->set('tagIds', [$tags[0]->id])
+        ->set('form.inBedByDate', '2026-01-01')
+        ->set('form.inBedByTime', '20:30')
+        ->set('form.awakeAtDate', '2026-01-02')
+        ->set('form.awakeAtTime', '7:35')
+        ->set('form.temperature', '71')
+        ->set('form.rating', '2')
+        ->set('form.notes', '<p>This is a test</p>')
+        ->set('form.tagIds', [$tags[0]->id])
         ->call('save');
 
     $sleepEntry->refresh();
@@ -99,5 +100,35 @@ it('can set the rating', function () {
     Livewire::actingAs($sleepEntry->user)
         ->test('pages::sleep_entry.edit', ['sleepEntry' => $sleepEntry])
         ->call('setRating', 5)
-        ->assertSet('rating', 5);
+        ->assertSet('form.rating', 5);
+});
+
+it('can add a key point', function () {
+    $sleepEntry = SleepEntry::factory()
+        ->for(User::factory())
+        ->create();
+
+    Livewire::actingAs($sleepEntry->user)
+        ->test('pages::sleep_entry.edit', ['sleepEntry' => $sleepEntry])
+        ->set('form.newKeyPointPositive', 0)
+        ->set('form.newKeyPointText', 'test')
+        ->call('addKeyPoint')
+        ->assertSet('form.keyPoints', [['is_positive' => 0, 'text' => 'test']]);
+});
+
+it('can remove a key point', function () {
+    $sleepEntry = SleepEntry::factory()
+        ->for(User::factory())
+        ->has(KeyPoint::factory()->count(3))
+        ->create();
+
+    $keyPoints = $sleepEntry->keyPoints;
+
+    Livewire::actingAs($sleepEntry->user)
+        ->test('pages::sleep_entry.edit', ['sleepEntry' => $sleepEntry])
+        ->call('removeKeyPoint', 1)
+        ->assertSet('form.keyPoints', [
+            ['id' => $keyPoints[0]->id, 'is_positive' => $keyPoints[0]->is_positive, 'text' => $keyPoints[0]->text],
+            ['id' => $keyPoints[2]->id, 'is_positive' => $keyPoints[2]->is_positive, 'text' => $keyPoints[2]->text],
+        ]);
 });

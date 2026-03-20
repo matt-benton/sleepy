@@ -19,15 +19,15 @@ it('can create a sleep entry', function () {
 
     Livewire::actingAs($user)
         ->test('pages::sleep_entry.create')
-        ->set('inBedByDate', '2026-02-26')
-        ->set('inBedByTime', '23:30')
-        ->set('awakeAtDate', '2026-02-27')
-        ->set('awakeAtTime', '06:05')
-        ->set('temperature', '67')
-        ->set('rating', '5')
-        ->set('notes', 'Had a wonderful sleep last night')
-        ->set('tagIds', [$user->tags[1]->id, $user->tags[4]->id])
-        ->set('keyPoints', [
+        ->set('form.inBedByDate', '2026-02-26')
+        ->set('form.inBedByTime', '23:30')
+        ->set('form.awakeAtDate', '2026-02-27')
+        ->set('form.awakeAtTime', '06:05')
+        ->set('form.temperature', '67')
+        ->set('form.rating', '5')
+        ->set('form.notes', 'Had a wonderful sleep last night')
+        ->set('form.tagIds', [$user->tags[1]->id, $user->tags[4]->id])
+        ->set('form.keyPoints', [
             ['is_positive' => 1, 'text' => 'test 1'],
             ['is_positive' => 0, 'text' => 'test 2'],
         ])
@@ -54,22 +54,22 @@ it('can create a sleep entry', function () {
 it('can add a key point', function () {
     Livewire::actingAs(User::factory()->make())
         ->test('pages::sleep_entry.create')
-        ->set('newKeyPointPositive', 0)
-        ->set('newKeyPointText', 'test')
+        ->set('form.newKeyPointPositive', 0)
+        ->set('form.newKeyPointText', 'test')
         ->call('addKeyPoint')
-        ->assertSet('keyPoints', [['is_positive' => 0, 'text' => 'test']]);
+        ->assertSet('form.keyPoints', [['is_positive' => 0, 'text' => 'test']]);
 });
 
 it('can remove a key point', function () {
     Livewire::actingAs(User::factory()->make())
         ->test('pages::sleep_entry.create')
-        ->set('keyPoints', [
+        ->set('form.keyPoints', [
             ['is_positive' => 1, 'text' => 'test 1'],
             ['is_positive' => 0, 'text' => 'test 2'],
             ['is_positive' => 0, 'text' => 'test 3'],
         ])
         ->call('removeKeyPoint', 1)
-        ->assertSet('keyPoints', [
+        ->assertSet('form.keyPoints', [
             ['is_positive' => 1, 'text' => 'test 1'],
             ['is_positive' => 0, 'text' => 'test 3'],
         ]);
