@@ -26,7 +26,6 @@
                 <flux:text size="sm"><i>{{ $entry->temperature }}&deg;F</i></flux:text>
             @endif
 
-            <!-- NEED TO SANITIZE THIS -->
             <flux:text>{!! $entry->notes !!}</flux:text>
             <div class="flex">
                 @if ($entry->rating)

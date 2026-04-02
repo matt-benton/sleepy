@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
+use Symfony\Component\HtmlSanitizer\HtmlSanitizer;
+use Symfony\Component\HtmlSanitizer\HtmlSanitizerConfig;
 
 class SleepEntry extends Model
 {
@@ -99,6 +101,17 @@ class SleepEntry extends Model
 
                 return null;
             }
+        );
+    }
+
+    protected function notes(): Attribute
+    {
+        $htmlSanitizer = new HtmlSanitizer(
+            new HtmlSanitizerConfig()->allowSafeElements()
+        );
+
+        return Attribute::make(
+            get: fn (string $value) => $htmlSanitizer->sanitize(html_entity_decode($value)),
         );
     }
 }
