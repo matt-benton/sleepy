@@ -132,3 +132,17 @@ it('can remove a key point', function () {
             ['id' => $keyPoints[2]->id, 'is_positive' => $keyPoints[2]->is_positive, 'text' => $keyPoints[2]->text],
         ]);
 });
+
+it('can edit sleep entry with new tag', function () {
+    $sleepEntry = SleepEntry::factory()
+        ->for(User::factory())
+        ->create();
+
+    Livewire::actingAs($sleepEntry->user)
+        ->test('pages::sleep_entry.edit', ['sleepEntry' => $sleepEntry])
+        ->set('form.tagSearch', 'midnight snack')
+        ->call('createTag');
+
+    expect($sleepEntry->user->fresh()->tags()->count())->toBe(1);
+    expect($sleepEntry->user->fresh()->tags[0]->name)->toBe('midnight snack');
+});
