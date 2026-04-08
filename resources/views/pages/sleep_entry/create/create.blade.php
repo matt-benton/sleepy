@@ -67,10 +67,18 @@
 
         <flux:field>
             <flux:label>Tags</flux:table>
-            <flux:pillbox multiple searchable placeholder="Choose tags..." wire:model="form.tagIds">
+            <flux:pillbox multiple variant="combobox" wire:model="form.tagIds">
+                <x-slot name="input">
+                    <flux:pillbox.input wire:model="form.tagSearch" placeholder="Choose tags..." />
+                </x-slot>
+
                 @foreach ($form->tags as $tag)
                     <flux:pillbox.option value="{{ $tag->id }}">{{ $tag->name }}</flux:pillbox.option>
                 @endforeach
+
+                <flux:pillbox.option.create wire:click="createTag" min-length="2">
+                    Create new "<span wire:text="form.tagSearch"></span>"
+                </flux:pillbox.option.create>
             </flux:pillbox>
         </flux:field>
         <div class="flex gap-1 justify-end">

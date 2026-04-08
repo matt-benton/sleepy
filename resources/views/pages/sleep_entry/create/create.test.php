@@ -74,3 +74,15 @@ it('can remove a key point', function () {
             ['is_positive' => 0, 'text' => 'test 3'],
         ]);
 });
+
+it('can create sleep entry with new tag', function () {
+    $user = User::factory()->create();
+
+    Livewire::actingAs($user)
+        ->test('pages::sleep_entry.create')
+        ->set('form.tagSearch', 'electric blanket')
+        ->call('createTag');
+
+    expect($user->fresh()->tags()->count())->toBe(1);
+    expect($user->fresh()->tags[0]->name)->toBe('electric blanket');
+});

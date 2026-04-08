@@ -45,4 +45,9 @@ new class extends Component
     {
         $this->form->removeKeyPoint($index);
     }
+
+    public function createTag()
+    {
+        $this->form->createTag();
+    }
 };

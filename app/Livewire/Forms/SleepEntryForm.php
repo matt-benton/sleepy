@@ -3,6 +3,7 @@
 namespace App\Livewire\Forms;
 
 use App\Models\SleepEntry;
+use App\Models\Tag;
 use Livewire\Form;
 
 class SleepEntryForm extends Form
@@ -24,6 +25,8 @@ class SleepEntryForm extends Form
     public $notes = '';
 
     public $tagIds = [];
+
+    public $tagSearch = '';
 
     public $tags = [];
 
@@ -147,5 +150,16 @@ class SleepEntryForm extends Form
     public function removeKeyPoint($index)
     {
         array_splice($this->keyPoints, $index, 1);
+    }
+
+    // FIXME: this is not validated
+    public function createTag()
+    {
+        $tag = new Tag;
+        $tag->name = $this->tagSearch;
+        auth()->user()->tags()->save($tag);
+
+        $this->tagIds[] = $tag->id;
+        $this->tags[] = $tag;
     }
 }
