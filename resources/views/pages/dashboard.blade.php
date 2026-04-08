@@ -29,7 +29,7 @@ new class extends Component
             <flux:card class="overflow-hidden min-w-[12rem]">
                 <flux:text>Avg Sleep Rating (prev 7 days)</flux:text>
 
-                <flux:heading size="xl" class="mt-2 tabular-nums">{{ $prevSevenDayRatings->avg() }}</flux:heading>
+                <flux:heading size="xl" class="mt-2 tabular-nums">{{ round($prevSevenDayRatings->avg(), 1) }}</flux:heading>
 
                 <flux:chart class="-mx-8 -mb-8 h-[3rem]" :value="$prevSevenDayRatings">
                     <flux:chart.svg gutter="0">
@@ -41,7 +41,7 @@ new class extends Component
             <flux:card class="overflow-hidden min-w-[12rem]">
                 <flux:text>Avg Sleep Rating (this month)</flux:text>
 
-                <flux:heading size="xl" class="mt-2 tabular-nums">{{ $thisMonthRatings->avg() }}</flux:heading>
+                <flux:heading size="xl" class="mt-2 tabular-nums">{{ round($thisMonthRatings->avg(), 1) }}</flux:heading>
 
                 <flux:chart class="-mx-8 -mb-8 h-[3rem]" :value="$thisMonthRatings">
                     <flux:chart.svg gutter="0">
