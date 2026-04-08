@@ -6,11 +6,8 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-Route::view('dashboard', 'dashboard')
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
-
 Route::middleware(['auth', 'verified'])->group(function () {
+    Route::livewire('/dashboard', 'pages::dashboard')->name('dashboard');
     Route::livewire('/tags/create', 'pages::tag.create')->name('tag.create');
     Route::livewire('/tags', 'pages::tag.index')->name('tag.index');
     Route::livewire('/tags/{tag}', 'pages::tag.show')->name('tag.show')->withTrashed();
