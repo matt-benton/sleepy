@@ -47,7 +47,7 @@ new class extends Component
 
     }
 
-    private function averageTimeOfDay(array $times): String {
+    private function averageTimeOfDay(array $times): ?String {
         if (count($times) === 0) {
             return null;
         }
