@@ -130,6 +130,7 @@ new class extends Component
                     <flux:text variant="subtle" size="xl">None</flux:text>
                 @endif
             </flux:card>
+            <x-dashboard.latest_five_star_sleep_card />
         </div>
 
         <div class="grid auto-rows-min gap-4 md:grid-cols-3">
