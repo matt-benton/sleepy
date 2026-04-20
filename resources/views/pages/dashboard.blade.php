@@ -22,6 +22,7 @@ new class extends Component
     public function mount()
     {
         $prevSevenDayEntries = auth()->user()->sleepEntries()
+            ->rated()
             ->whereBetween('awake_at', [now()->subDays(7), now()])
             ->get();
 
@@ -42,6 +43,7 @@ new class extends Component
         $this->avgMonthInBedBy = $this->averageTimeOfDay($prevMonthInBedBy->toArray());
 
         $this->thisMonthRatings = auth()->user()->sleepEntries()
+            ->rated()
             ->whereBetween('awake_at', [now()->startOfMonth(), now()->endOfMonth()])
             ->pluck('rating');
 
@@ -131,6 +133,7 @@ new class extends Component
                 @endif
             </flux:card>
             <x-dashboard.latest_five_star_sleep_card />
+            <x-dashboard.top_and_bottom_rated_tags />
         </div>
 
         <div class="grid auto-rows-min gap-4 md:grid-cols-3">
