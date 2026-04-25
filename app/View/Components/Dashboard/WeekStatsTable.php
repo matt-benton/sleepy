@@ -33,7 +33,7 @@ class WeekStatsTable extends Component
                     WHEN '5' THEN 'Friday'
                     WHEN '6' THEN 'Saturday'
                 END as day_of_week_formatted,
-                avg(rating) as avg_rating
+                ROUND(avg(rating), 1) as avg_rating
             ")
             ->groupBy('day_of_week_numeric')
             ->orderBy('day_of_week_numeric')
