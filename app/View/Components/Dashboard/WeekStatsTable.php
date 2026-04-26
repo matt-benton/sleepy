@@ -23,8 +23,8 @@ class WeekStatsTable extends Component
     {
         $daysOfWeek = auth()->user()->sleepEntries()
             ->selectRaw("
-                strftime('%w', sleep_entries.in_bed_by) as day_of_week_numeric,
-                CASE strftime('%w', sleep_entries.in_bed_by)
+                strftime('%w', sleep_entries.awake_at) as day_of_week_numeric,
+                CASE strftime('%w', sleep_entries.awake_at)
                     WHEN '0' THEN 'Sunday'
                     WHEN '1' THEN 'Monday'
                     WHEN '2' THEN 'Tuesday'

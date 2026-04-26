@@ -2,7 +2,7 @@
     <flux:card>
     <flux:table>
         <flux:table.columns>
-            <flux:table.column>Day</flux:table.column>
+            <flux:table.column>Woke Up On</flux:table.column>
             <flux:table.column align="end">Avg Rating</flux:table.column>
         </flux:table.columns>
 
