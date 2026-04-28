@@ -81,7 +81,7 @@ class SleepEntry extends Model
         );
     }
 
-    protected function sleepLength(): Attribute
+    protected function totalMinutes(): Attribute
     {
         return Attribute::make(
             get: function (mixed $value, array $attributes) {
@@ -89,16 +89,27 @@ class SleepEntry extends Model
                 $awakeAt = $attributes['awake_at'] ? new Carbon($attributes['awake_at'])->toImmutable() : null;
 
                 if ($inBedBy && $awakeAt) {
-                    $totalMinutes = $inBedBy->diffInMinutes($awakeAt);
-                    $hours = intdiv($totalMinutes, 60);
-                    $minutes = $totalMinutes % 60;
+                    return $inBedBy->diffInMinutes($awakeAt);
+                }
+
+                return null;
+            }
+        );
+    }
+
+    protected function sleepLength(): Attribute
+    {
+        return Attribute::make(
+            get: function (mixed $value, array $attributes) {
+                if ($this->totalMinutes) {
+                    $hours = intdiv($this->totalMinutes, 60);
+                    $minutes = $this->totalMinutes % 60;
 
                     if ($minutes > 0) {
                         return "{$hours} hours, {$minutes} minutes";
                     } else {
                         return $hours.' hours';
                     }
-
                 }
 
                 return null;

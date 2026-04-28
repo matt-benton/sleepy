@@ -19,6 +19,10 @@ new class extends Component
 
     public $avgMonthAwakeAt;
 
+    public $avgSevenDaySleepLength;
+
+    public $avgMonthSleepLength;
+
     public function mount()
     {
         $prevSevenDayEntries = auth()->user()->sleepEntries()
@@ -33,6 +37,9 @@ new class extends Component
         $this->avgSevenDayAwakeAt = $this->averageTimeOfDay($prevSevenDayAwakeAt->toArray());
         $this->avgSevenDayInBedBy = $this->averageTimeOfDay($prevSevenDayInBedBy->toArray());
 
+        $avgSevenDayTotalMinutes = $prevSevenDayEntries->avg('total_minutes');
+        $this->avgSevenDaySleepLength = intdiv($avgSevenDayTotalMinutes, 60) . ' hours, ' . $avgSevenDayTotalMinutes % 60 . ' minutes';
+
         $monthEntries = auth()->user()->sleepEntries()
             ->whereBetween('awake_at', [now()->startOfMonth(), now()->endOfMonth()])
             ->get();
@@ -41,6 +48,9 @@ new class extends Component
         $prevMonthInBedBy = $monthEntries->pluck('in_bed_by');
         $this->avgMonthAwakeAt = $this->averageTimeOfDay($prevMonthAwakeAt->toArray());
         $this->avgMonthInBedBy = $this->averageTimeOfDay($prevMonthInBedBy->toArray());
+
+        $avgMonthTotalMinutes = $monthEntries->avg('total_minutes');
+        $this->avgMonthSleepLength = intdiv($avgMonthTotalMinutes, 60) . ' hours, ' . $avgMonthTotalMinutes % 60 . ' minutes';
 
         $this->thisMonthRatings = auth()->user()->sleepEntries()
             ->rated()
@@ -118,6 +128,7 @@ new class extends Component
                     <flux:heading size="xl">
                         {{ $avgSevenDayInBedBy . ' - ' . $avgSevenDayAwakeAt }}
                     </flux:heading>
+                    <flux:text variant="subtle">({{ $avgSevenDaySleepLength }})</flux:text>
                 @else
                     <flux:text variant="subtle" size="xl">None</flux:text>
                 @endif
@@ -128,6 +139,7 @@ new class extends Component
                     <flux:heading size="xl">
                         {{ $avgMonthInBedBy . ' - ' . $avgMonthAwakeAt }}
                     </flux:heading>
+                    <flux:text variant="subtle">({{ $avgMonthSleepLength }})</flux:text>
                 @else
                     <flux:text variant="subtle" size="xl">None</flux:text>
                 @endif
