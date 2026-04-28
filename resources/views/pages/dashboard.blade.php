@@ -125,10 +125,12 @@ new class extends Component
             <flux:card>
                 <flux:text class="mb-2">Avg Sleep Session (prev 7 days)</flux:text>
                 @if ($avgSevenDayInBedBy && $avgSevenDayAwakeAt)
-                    <flux:heading size="xl">
-                        {{ $avgSevenDayInBedBy . ' - ' . $avgSevenDayAwakeAt }}
-                    </flux:heading>
-                    <flux:text variant="subtle">({{ $avgSevenDaySleepLength }})</flux:text>
+                    <div class="flex items-baseline gap-2">
+                        <flux:heading size="xl">
+                            {{ $avgSevenDayInBedBy . ' - ' . $avgSevenDayAwakeAt }}
+                        </flux:heading>
+                        <flux:text variant="subtle">{{ $avgSevenDaySleepLength }}</flux:text>
+                    </div>
                 @else
                     <flux:text variant="subtle" size="xl">None</flux:text>
                 @endif
@@ -136,10 +138,12 @@ new class extends Component
             <flux:card>
                 <flux:text class="mb-2">Avg Sleep Session (this month)</flux:text>
                 @if ($avgMonthInBedBy && $avgMonthAwakeAt)
-                    <flux:heading size="xl">
-                        {{ $avgMonthInBedBy . ' - ' . $avgMonthAwakeAt }}
-                    </flux:heading>
-                    <flux:text variant="subtle">({{ $avgMonthSleepLength }})</flux:text>
+                    <div class="flex items-baseline gap-2">
+                        <flux:heading size="xl">
+                            {{ $avgMonthInBedBy . ' - ' . $avgMonthAwakeAt }}
+                        </flux:heading>
+                        <flux:text variant="subtle">{{ $avgMonthSleepLength }}</flux:text>
+                    </div>
                 @else
                     <flux:text variant="subtle" size="xl">None</flux:text>
                 @endif
