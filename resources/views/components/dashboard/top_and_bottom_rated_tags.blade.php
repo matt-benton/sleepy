@@ -16,7 +16,9 @@
                 , 1) as avg_rating
             '),
         )
+            ->withCount('sleepEntries')
             ->where('avg_rating', '>', 0)
+            ->where('sleep_entries_count', '>', 3)
             ->get();
 
 @endphp
@@ -28,7 +30,7 @@
                 @foreach ($tags->sortByDesc('avg_rating')->splice(0, 3) as $tag)
                     <li class="flex justify-between">
                         <a href="/tags/{{ $tag->id }}" wire:navigate>
-                            <flux:badge color="emerald" rounded><span>{{ $tag->name }}</span></flux:badge>
+                            <flux:badge color="emerald" rounded><span>{{ $tag->name }} ({{ $tag->sleep_entries_count }})</span></flux:badge>
                         </a>
                         <span>{{ $tag->avg_rating }}</span>
                     </li>
@@ -45,7 +47,7 @@
                 @foreach ($tags->sortBy('avg_rating')->splice(0, 3) as $tag)
                     <li class="flex justify-between">
                         <a href="/tags/{{ $tag->id }}" wire:navigate>
-                            <flux:badge color="rose" rounded><span>{{ $tag->name }}</span></flux:badge>
+                            <flux:badge color="rose" rounded><span>{{ $tag->name }} ({{ $tag->sleep_entries_count }})</span></flux:badge>
                         </a>
                         <span>{{ $tag->avg_rating }}</span>
                     </li>
