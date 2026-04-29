@@ -20,7 +20,9 @@ it('can edit a tag', function () {
     Livewire::actingAs($user)
         ->test('pages::tag.edit', ['tag' => $tag])
         ->set('name', 'Renamed')
+        ->set('description', 'New description')
         ->call('save');
 
     expect($tag->fresh()->name)->toBe('Renamed');
+    expect($tag->fresh()->description)->toBe('New description');
 });

@@ -12,6 +12,9 @@ new class extends Component
     #[Validate('required|max:30')]
     public $name = '';
 
+    #[Validate('nullable|max:255')]
+    public string $description = '';
+
     public function mount()
     {
         $this->tags = auth()->user()->tags;
@@ -23,6 +26,7 @@ new class extends Component
 
         $tag = new Tag;
         $tag->name = $this->name;
+        $tag->description = $this->description;
         $request->user()->tags()->save($tag);
 
         return redirect()->route('tag.index');

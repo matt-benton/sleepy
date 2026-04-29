@@ -17,7 +17,7 @@ class Tag extends Model
 
     use SoftDeletes;
 
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'description'];
 
     public function user(): BelongsTo
     {

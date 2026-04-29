@@ -20,7 +20,12 @@ it('can create a tag', function () {
     Livewire::actingAs($user)
         ->test('pages::tag.create')
         ->set('name', 'sleep apnea')
+        ->set('description', 'A breathing disorder during sleep')
         ->call('save');
 
+    $user->refresh();
+
     expect(Tag::count())->toBe(1);
+    expect($user->tags[0]->name)->toBe('sleep apnea');
+    expect($user->tags[0]->description)->toBe('A breathing disorder during sleep');
 });

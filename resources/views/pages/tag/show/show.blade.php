@@ -3,6 +3,7 @@
     <flux:main container>
         <div class="space-y-4">
             <flux:heading size="xl" level="2">{{ $tag->name }}</flux:heading>
+            <flux:text>{{ $tag->description }}</flux:heading>
             @if ($tag->trashed())
                 <flux:card class="bg-red-200 dark:bg-red-400 flex justify-between">
                     <div class="flex items-center">
@@ -21,7 +22,7 @@
                     <flux:text class="mt-2">List of sleeps will go here</flux:text>
                 </flux:card>
                 <flux:button href="/tags/{{ $tag->id }}/edit" variant="primary" icon="pencil" wire:navigate>
-                    Rename
+                    Edit
                 </flux:button>
                 <flux:button icon="trash" class="cursor-pointer" wire:click="delete">
                     Remove
