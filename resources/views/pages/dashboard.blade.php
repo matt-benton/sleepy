@@ -99,7 +99,7 @@ new class extends Component
 
 <div>
     <div class="flex h-full w-full flex-1 flex-col gap-4 rounded-xl">
-        <div class="grid grid-cols-3 grid-rows-2 auto-cols-min gap-4">
+        <div class="grid grid-cols-2 grid-rows-2 auto-cols-min gap-4">
             <flux:card>
                 <flux:text class="mb-2">Avg Sleep Session (prev 7 days)</flux:text>
                 @if ($avgSevenDayInBedBy && $avgSevenDayAwakeAt)
@@ -123,7 +123,6 @@ new class extends Component
                     </flux:chart.svg>
                 </flux:chart>
             </flux:card>
-            <x-dashboard.top_and_bottom_rated_tags />
             <flux:card>
                 <flux:text class="mb-2">Avg Sleep Session (this month)</flux:text>
                 @if ($avgMonthInBedBy && $avgMonthAwakeAt)
@@ -150,13 +149,18 @@ new class extends Component
             {{-- <x-dashboard.latest_five_star_sleep_card /> --}}
         </div>
 
-        <x-dashboard.week-stats-table />
+        <div class="grid gap-4 grid-cols-3">
+            <div class="space-y-4">
+                <x-dashboard.top_and_bottom_rated_tags />
+                <x-dashboard.week-stats-table />
+            </div>
 
-        <flux:card class="space-y-10">
-            @foreach ($prevSevenDayEntries as $entry)
-                <x-sleep-entry-display :sleep-entry="$entry" />
-            @endforeach
-        </flux:card>
+            <flux:card class="space-y-10 col-span-2">
+                @foreach ($prevSevenDayEntries as $entry)
+                    <x-sleep-entry-display :sleep-entry="$entry" />
+                @endforeach
+            </flux:card>
+        </div>
 
 
     </div>
