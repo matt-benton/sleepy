@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\UserHasSleepEntries;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -7,7 +8,7 @@ Route::get('/', function () {
 })->name('home');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::livewire('/dashboard', 'pages::dashboard')->name('dashboard');
+    Route::livewire('/dashboard', 'pages::dashboard')->name('dashboard')->middleware(UserHasSleepEntries::class);
     Route::livewire('/tags/create', 'pages::tag.create')->name('tag.create');
     Route::livewire('/tags', 'pages::tag.index')->name('tag.index');
     Route::livewire('/tags/{tag}', 'pages::tag.show')->name('tag.show')->withTrashed();
