@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use App\Models\Scopes\LatestAwakeAtScope;
 use Illuminate\Database\Eloquent\Attributes\Scope;
+use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -15,6 +17,7 @@ use Illuminate\Support\Carbon;
 use Symfony\Component\HtmlSanitizer\HtmlSanitizer;
 use Symfony\Component\HtmlSanitizer\HtmlSanitizerConfig;
 
+#[ScopedBy([LatestAwakeAtScope::class])]
 class SleepEntry extends Model
 {
     /** @use HasFactory<\Database\Factories\SleepEntryFactory> */
