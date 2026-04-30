@@ -11,7 +11,7 @@ new class extends Component
 
     public function mount(Tag $tag)
     {
-        $this->tag = $tag;
+        $this->tag = $tag->load('sleepEntries');
         $this->tags = auth()->user()->tags;
     }
 

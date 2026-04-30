@@ -17,16 +17,21 @@
                     </div>
                 </flux:card>
             @else
-                <flux:card>
-                    <flux:heading size="lg">Sleeps</flux:heading>
-                    <flux:text class="mt-2">List of sleeps will go here</flux:text>
-                </flux:card>
                 <flux:button href="/tags/{{ $tag->id }}/edit" variant="primary" icon="pencil" wire:navigate>
                     Edit
                 </flux:button>
                 <flux:button icon="trash" class="cursor-pointer" wire:click="delete">
                     Remove
                 </flux:button>
+                <flux:card class="space-y-10">
+                    @if ($tag->sleepEntries->isNotEmpty())
+                        @foreach ($tag->sleepEntries as $entry)
+                            <x-sleep-entry-display :sleep-entry="$entry" />
+                        @endforeach
+                    @else
+                        <flux:text>No sleep entries belong to this tag</flux:text>
+                    @endif
+                </flux:card>
             @endif
         </div>
     </flux:main>
