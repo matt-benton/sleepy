@@ -28,15 +28,11 @@
             <flux:text class="mb-2">Top Rated Tags</flux:text>
             @if ($tags->isNotEmpty())
                 <ul class="space-y-2">
-                    @foreach ($tags->sortByDesc('avg_rating')->splice(0, 5) as $tag)
+                    @foreach ($tags->sortByDesc('avg_rating')->splice(0, 3) as $tag)
                         <li class="flex justify-between">
                             <a href="/tags/{{ $tag->id }}" wire:navigate>
                                 <flux:badge color="emerald" rounded>
-                                    @if (strlen($tag->name) > 9)
-                                        <span>{{ substr($tag->name, 0, 9) . '...' }} ({{ $tag->sleep_entries_count }})</span>
-                                    @else
-                                        <span>{{ $tag->name }} ({{ $tag->sleep_entries_count }})</span>
-                                    @endif
+                                    <span>{{ $tag->name }} ({{ $tag->sleep_entries_count }})</span>
                                 </flux:badge>
                             </a>
                             <span>{{ $tag->avg_rating }}</span>
@@ -51,15 +47,11 @@
             <flux:text class="mb-2">Lowest Rated Tags</flux:text>
             @if ($tags->isNotEmpty())
                 <ul class="space-y-2">
-                    @foreach ($tags->sortBy('avg_rating')->splice(0, 5) as $tag)
+                    @foreach ($tags->sortBy('avg_rating')->splice(0, 3) as $tag)
                         <li class="flex justify-between">
                             <a href="/tags/{{ $tag->id }}" wire:navigate>
                                 <flux:badge color="rose" rounded>
-                                    @if (strlen($tag->name) > 9)
-                                        <span>{{ substr($tag->name, 0, 9) . '...' }} ({{ $tag->sleep_entries_count }})</span>
-                                    @else
-                                        <span>{{ $tag->name }} ({{ $tag->sleep_entries_count }})</span>
-                                    @endif
+                                    <span>{{ $tag->name }} ({{ $tag->sleep_entries_count }})</span>
                                 </flux:badge>
                             </a>
                             <span>{{ $tag->avg_rating }}</span>

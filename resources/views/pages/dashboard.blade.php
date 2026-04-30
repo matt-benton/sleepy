@@ -149,13 +149,13 @@ new class extends Component
             {{-- <x-dashboard.latest_five_star_sleep_card /> --}}
         </div>
 
-        <div class="grid gap-4 grid-cols-3">
-            <div class="space-y-4">
+        <div class="grid gap-4 grid-cols-10">
+            <div class="space-y-4 col-span-4">
                 <x-dashboard.top_and_bottom_rated_tags />
                 <x-dashboard.week-stats-table />
             </div>
 
-            <flux:card class="space-y-10 col-span-2">
+            <flux:card class="space-y-10 col-span-6">
                 @foreach ($prevSevenDayEntries as $entry)
                     <x-sleep-entry-display :sleep-entry="$entry" />
                 @endforeach
