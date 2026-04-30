@@ -22,39 +22,53 @@
             ->get();
 
 @endphp
-<flux:card class="flex col-2 space-between gap-5">
-    <div class="w-full">
-        <flux:text class="mb-2">Top Rated Tags</flux:text>
-        @if ($tags->isNotEmpty())
-            <ul class="space-y-1">
-                @foreach ($tags->sortByDesc('avg_rating')->splice(0, 3) as $tag)
-                    <li class="flex justify-between">
-                        <a href="/tags/{{ $tag->id }}" wire:navigate>
-                            <flux:badge color="emerald" rounded><span>{{ $tag->name }} ({{ $tag->sleep_entries_count }})</span></flux:badge>
-                        </a>
-                        <span>{{ $tag->avg_rating }}</span>
-                    </li>
-                @endforeach
-            </ul>
-        @else
-            <flux:text variant="subtle" size="xl">None</flux:text>
-        @endif
-    </div>
-    <div class="w-full">
-        <flux:text class="mb-2">Lowest Rated Tags</flux:text>
-        @if ($tags->isNotEmpty())
-            <ul class="space-y-1">
-                @foreach ($tags->sortBy('avg_rating')->splice(0, 3) as $tag)
-                    <li class="flex justify-between">
-                        <a href="/tags/{{ $tag->id }}" wire:navigate>
-                            <flux:badge color="rose" rounded><span>{{ $tag->name }} ({{ $tag->sleep_entries_count }})</span></flux:badge>
-                        </a>
-                        <span>{{ $tag->avg_rating }}</span>
-                    </li>
-                @endforeach
-            </ul>
-        @else
-            <flux:text variant="subtle" size="xl">None</flux:text>
-        @endif
-    </div>
-</flux:card>
+<div class="row-span-2">
+    <flux:card class="flex col-2 space-between gap-5 h-full">
+        <div class="w-full">
+            <flux:text class="mb-2">Top Rated Tags</flux:text>
+            @if ($tags->isNotEmpty())
+                <ul class="space-y-2">
+                    @foreach ($tags->sortByDesc('avg_rating')->splice(0, 5) as $tag)
+                        <li class="flex justify-between">
+                            <a href="/tags/{{ $tag->id }}" wire:navigate>
+                                <flux:badge color="emerald" rounded>
+                                    @if (strlen($tag->name) > 9)
+                                        <span>{{ substr($tag->name, 0, 9) . '...' }} ({{ $tag->sleep_entries_count }})</span>
+                                    @else
+                                        <span>{{ $tag->name }} ({{ $tag->sleep_entries_count }})</span>
+                                    @endif
+                                </flux:badge>
+                            </a>
+                            <span>{{ $tag->avg_rating }}</span>
+                        </li>
+                    @endforeach
+                </ul>
+            @else
+                <flux:text variant="subtle" size="xl">None</flux:text>
+            @endif
+        </div>
+        <div class="w-full">
+            <flux:text class="mb-2">Lowest Rated Tags</flux:text>
+            @if ($tags->isNotEmpty())
+                <ul class="space-y-2">
+                    @foreach ($tags->sortBy('avg_rating')->splice(0, 5) as $tag)
+                        <li class="flex justify-between">
+                            <a href="/tags/{{ $tag->id }}" wire:navigate>
+                                <flux:badge color="rose" rounded>
+                                    @if (strlen($tag->name) > 9)
+                                        <span>{{ substr($tag->name, 0, 9) . '...' }} ({{ $tag->sleep_entries_count }})</span>
+                                    @else
+                                        <span>{{ $tag->name }} ({{ $tag->sleep_entries_count }})</span>
+                                    @endif
+                                </flux:badge>
+                            </a>
+                            <span>{{ $tag->avg_rating }}</span>
+                        </li>
+                    @endforeach
+                </ul>
+            @else
+                <flux:text variant="subtle" size="xl">None</flux:text>
+            @endif
+        </div>
+    </flux:card>
+</div>

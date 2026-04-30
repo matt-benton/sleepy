@@ -23,21 +23,23 @@ new class extends Component
 
     public $avgMonthSleepLength;
 
+    public $prevSevenDayEntries;
+
     public function mount()
     {
-        $prevSevenDayEntries = auth()->user()->sleepEntries()
+        $this->prevSevenDayEntries = auth()->user()->sleepEntries()
             ->rated()
             ->whereBetween('awake_at', [now()->subDays(7), now()])
             ->get();
 
-        $this->prevSevenDayRatings = $prevSevenDayEntries->pluck('rating');
+        $this->prevSevenDayRatings = $this->prevSevenDayEntries->pluck('rating');
 
-        $prevSevenDayAwakeAt = $prevSevenDayEntries->pluck('awake_at');
-        $prevSevenDayInBedBy = $prevSevenDayEntries->pluck('in_bed_by');
+        $prevSevenDayAwakeAt = $this->prevSevenDayEntries->pluck('awake_at');
+        $prevSevenDayInBedBy = $this->prevSevenDayEntries->pluck('in_bed_by');
         $this->avgSevenDayAwakeAt = $this->averageTimeOfDay($prevSevenDayAwakeAt->toArray());
         $this->avgSevenDayInBedBy = $this->averageTimeOfDay($prevSevenDayInBedBy->toArray());
 
-        $avgSevenDayTotalMinutes = $prevSevenDayEntries->avg('total_minutes');
+        $avgSevenDayTotalMinutes = $this->prevSevenDayEntries->avg('total_minutes');
         $this->avgSevenDaySleepLength = intdiv($avgSevenDayTotalMinutes, 60) . ' hours, ' . $avgSevenDayTotalMinutes % 60 . ' minutes';
 
         $monthEntries = auth()->user()->sleepEntries()
@@ -97,7 +99,18 @@ new class extends Component
 
 <div>
     <div class="flex h-full w-full flex-1 flex-col gap-4 rounded-xl">
-        <div class="grid auto-rows-min gap-4 md:grid-cols-2">
+        <div class="grid grid-cols-3 grid-rows-2 auto-cols-min gap-4">
+            <flux:card>
+                <flux:text class="mb-2">Avg Sleep Session (prev 7 days)</flux:text>
+                @if ($avgSevenDayInBedBy && $avgSevenDayAwakeAt)
+                    <flux:heading size="xl">
+                        {{ $avgSevenDayInBedBy . ' - ' . $avgSevenDayAwakeAt }}
+                    </flux:heading>
+                    <flux:text variant="subtle">{{ $avgSevenDaySleepLength }}</flux:text>
+                @else
+                    <flux:text variant="subtle" size="xl">None</flux:text>
+                @endif
+            </flux:card>
             <flux:card class="overflow-hidden min-w-[12rem]">
                 <flux:text>Avg Sleep Rating (prev 7 days)</flux:text>
 
@@ -109,6 +122,18 @@ new class extends Component
                         <flux:chart.area class="text-sky-100 dark:text-sky-400/30" />
                     </flux:chart.svg>
                 </flux:chart>
+            </flux:card>
+            <x-dashboard.top_and_bottom_rated_tags />
+            <flux:card>
+                <flux:text class="mb-2">Avg Sleep Session (this month)</flux:text>
+                @if ($avgMonthInBedBy && $avgMonthAwakeAt)
+                    <flux:heading size="xl">
+                        {{ $avgMonthInBedBy . ' - ' . $avgMonthAwakeAt }}
+                    </flux:heading>
+                    <flux:text variant="subtle">{{ $avgMonthSleepLength }}</flux:text>
+                @else
+                    <flux:text variant="subtle" size="xl">None</flux:text>
+                @endif
             </flux:card>
             <flux:card class="overflow-hidden min-w-[12rem]">
                 <flux:text>Avg Sleep Rating (this month)</flux:text>
@@ -122,51 +147,17 @@ new class extends Component
                     </flux:chart.svg>
                 </flux:chart>
             </flux:card>
-            <flux:card>
-                <flux:text class="mb-2">Avg Sleep Session (prev 7 days)</flux:text>
-                @if ($avgSevenDayInBedBy && $avgSevenDayAwakeAt)
-                    <div class="flex items-baseline gap-2">
-                        <flux:heading size="xl">
-                            {{ $avgSevenDayInBedBy . ' - ' . $avgSevenDayAwakeAt }}
-                        </flux:heading>
-                        <flux:text variant="subtle">{{ $avgSevenDaySleepLength }}</flux:text>
-                    </div>
-                @else
-                    <flux:text variant="subtle" size="xl">None</flux:text>
-                @endif
-            </flux:card>
-            <flux:card>
-                <flux:text class="mb-2">Avg Sleep Session (this month)</flux:text>
-                @if ($avgMonthInBedBy && $avgMonthAwakeAt)
-                    <div class="flex items-baseline gap-2">
-                        <flux:heading size="xl">
-                            {{ $avgMonthInBedBy . ' - ' . $avgMonthAwakeAt }}
-                        </flux:heading>
-                        <flux:text variant="subtle">{{ $avgMonthSleepLength }}</flux:text>
-                    </div>
-                @else
-                    <flux:text variant="subtle" size="xl">None</flux:text>
-                @endif
-            </flux:card>
-            <x-dashboard.latest_five_star_sleep_card />
-            <x-dashboard.top_and_bottom_rated_tags />
+            {{-- <x-dashboard.latest_five_star_sleep_card /> --}}
         </div>
 
         <x-dashboard.week-stats-table />
 
-        <div class="grid auto-rows-min gap-4 md:grid-cols-3">
-            <div class="relative aspect-video overflow-hidden rounded-xl border border-neutral-200 dark:border-neutral-700">
-                <x-placeholder-pattern class="absolute inset-0 size-full stroke-gray-900/20 dark:stroke-neutral-100/20" />
-            </div>
-            <div class="relative aspect-video overflow-hidden rounded-xl border border-neutral-200 dark:border-neutral-700">
-                <x-placeholder-pattern class="absolute inset-0 size-full stroke-gray-900/20 dark:stroke-neutral-100/20" />
-            </div>
-            <div class="relative aspect-video overflow-hidden rounded-xl border border-neutral-200 dark:border-neutral-700">
-                <x-placeholder-pattern class="absolute inset-0 size-full stroke-gray-900/20 dark:stroke-neutral-100/20" />
-            </div>
-        </div>
-        <div class="relative h-full flex-1 overflow-hidden rounded-xl border border-neutral-200 dark:border-neutral-700">
-            <x-placeholder-pattern class="absolute inset-0 size-full stroke-gray-900/20 dark:stroke-neutral-100/20" />
-        </div>
+        <flux:card class="space-y-10">
+            @foreach ($prevSevenDayEntries as $entry)
+                <x-sleep-entry-display :sleep-entry="$entry" />
+            @endforeach
+        </flux:card>
+
+
     </div>
 </div>
