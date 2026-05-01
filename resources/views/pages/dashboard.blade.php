@@ -32,7 +32,7 @@ new class extends Component
             ->whereBetween('awake_at', [now()->subDays(7), now()])
             ->get();
 
-        $this->prevSevenDayRatings = $this->prevSevenDayEntries->pluck('rating');
+        $this->prevSevenDayRatings = $this->prevSevenDayEntries->reverse()->pluck('rating');
 
         $prevSevenDayAwakeAt = $this->prevSevenDayEntries->pluck('awake_at');
         $prevSevenDayInBedBy = $this->prevSevenDayEntries->pluck('in_bed_by');
@@ -57,8 +57,9 @@ new class extends Component
         $this->thisMonthRatings = auth()->user()->sleepEntries()
             ->rated()
             ->whereBetween('awake_at', [now()->startOfMonth(), now()->endOfMonth()])
+            ->withoutGlobalScope(LatestAwakeAtScope::class)
+            ->orderBy('awake_at')
             ->pluck('rating');
-
     }
 
     private function averageTimeOfDay(array $times): ?String {
