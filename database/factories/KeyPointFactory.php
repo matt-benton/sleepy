@@ -18,7 +18,7 @@ class KeyPointFactory extends Factory
     {
         return [
             'is_positive' => $this->faker->numberBetween(0, 1),
-            'text' => $this->faker->sentence,
+            'text' => $this->faker->sentence(),
         ];
     }
 
