@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Scopes\LatestAwakeAtScope;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Attributes\ScopedBy;
 use Illuminate\Database\Eloquent\Builder;
@@ -17,6 +18,7 @@ use Illuminate\Support\Carbon;
 use Symfony\Component\HtmlSanitizer\HtmlSanitizer;
 use Symfony\Component\HtmlSanitizer\HtmlSanitizerConfig;
 
+#[Fillable('in_bed_by', 'awake_at', 'temperature', 'rating', 'notes')]
 #[ScopedBy([LatestAwakeAtScope::class])]
 class SleepEntry extends Model
 {
@@ -24,14 +26,6 @@ class SleepEntry extends Model
     use HasFactory;
 
     use SoftDeletes;
-
-    protected $fillable = [
-        'in_bed_by',
-        'awake_at',
-        'temperature',
-        'rating',
-        'notes',
-    ];
 
     protected function casts()
     {
