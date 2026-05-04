@@ -14,5 +14,4 @@ class KeyPoint extends Model
 {
     /** @use HasFactory<\Database\Factories\KeyPointFactory> */
     use HasFactory;
-
 }
