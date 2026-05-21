@@ -13,6 +13,6 @@ class AlphabeticalNameScope implements Scope
      */
     public function apply(Builder $builder, Model $model): void
     {
-        $builder->orderBy('name');
+        $builder->orderByRaw('LOWER(name)');
     }
 }
