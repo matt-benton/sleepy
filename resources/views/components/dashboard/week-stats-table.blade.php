@@ -9,7 +9,15 @@
             <flux:table.rows>
                 @foreach ($daysOfWeek as $day)
                     <flux:table.row :key="$day['day_of_week']">
-                        <flux:table.cell>{{ $day['day_of_week_formatted'] }}</flux:table.cell>
+                        <flux:table.cell>
+                            <span class="flex items-center gap-1">
+                                @if ($day['day_of_week_numeric'] == now()->dayOfWeek())
+                                    <flux:icon.sun class="text-amber-400" />
+                                @endif
+
+                                {{ $day['day_of_week_formatted'] }}
+                            </span>
+                        </flux:table.cell>
                         <flux:table.cell align="end">
                             @if ($day['avg_rating'] >= 4)
                                 <flux:badge color="emerald">{{ $day['avg_rating'] }}</flux:badge>
