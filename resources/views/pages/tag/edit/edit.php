@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Tag;
+use Flux\Flux;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 
@@ -32,7 +33,7 @@ new class extends Component
         $this->tag->description = $this->description;
         $this->tag->save();
 
-        $this->dispatch('tag-updated');
+        Flux::toast(variant: 'success', text: 'Tag has been saved');
 
         return back();
     }

@@ -41,7 +41,7 @@ new class extends Component {
 
         $user->save();
 
-        $this->dispatch('profile-updated', name: $user->name);
+        Flux::toast(variant: 'success', text: 'Profile updated');
     }
 
     /**
@@ -113,10 +113,6 @@ new class extends Component {
                         {{ __('Save') }}
                     </flux:button>
                 </div>
-
-                <x-action-message  on="profile-updated">
-                    {{ __('Saved.') }}
-                </x-action-message>
             </div>
         </form>
 

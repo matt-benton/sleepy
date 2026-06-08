@@ -14,9 +14,6 @@
                 <div class="flex justify-end">
                     <flux:button type="submit" variant="primary">Save</flux:button>
                 </div>
-                <x-action-message on="tag-updated">
-                    Tag has been saved
-                </x-action-message>
             </form>
         </flux:card>
     </flux:main>

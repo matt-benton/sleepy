@@ -35,7 +35,7 @@ new class extends Component {
 
         $this->reset('current_password', 'password', 'password_confirmation');
 
-        $this->dispatch('password-updated');
+        Flux::toast(variant: 'success', text: 'Password has been updated');
     }
 }; ?>
 
@@ -74,10 +74,6 @@ new class extends Component {
                         {{ __('Save') }}
                     </flux:button>
                 </div>
-
-                <x-action-message class="me-3" on="password-updated">
-                    {{ __('Saved.') }}
-                </x-action-message>
             </div>
         </form>
     </x-pages::settings.layout>
