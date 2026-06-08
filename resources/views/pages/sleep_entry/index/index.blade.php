@@ -2,14 +2,17 @@
     <div class="flex justify-end">
         <flux:button variant="primary" icon="plus" href="/sleep_entries/create" wire:navigate>New Entry</flux:button>
     </div>
-    @foreach ($sleepEntries as $entry)
+    @foreach ($this->sleepEntries as $entry)
         <x-sleep-entry-display :sleep-entry="$entry" />
 
         @unless ($loop->last)
             <flux:separator />
         @endunless
     @endforeach
-    @if ($sleepEntries->isEmpty())
+
+    <flux:pagination :paginator="$this->sleepEntries" />
+
+    @if ($this->sleepEntries->isEmpty())
         <flux:card class="space-y-4">
             <flux:heading size="lg">No entries found</flux:heading>
             <flux:text>Create your first sleep entry</flux:text>

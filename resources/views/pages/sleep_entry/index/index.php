@@ -1,13 +1,16 @@
 <?php
 
+use Livewire\Attributes\Computed;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 new class extends Component
 {
-    public $sleepEntries = [];
+    use WithPagination;
 
-    public function mount()
+    #[Computed]
+    public function sleepEntries()
     {
-        $this->sleepEntries = auth()->user()->sleepEntries;
+        return auth()->user()->sleepEntries()->paginate();
     }
 };

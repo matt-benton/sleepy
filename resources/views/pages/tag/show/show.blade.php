@@ -23,17 +23,18 @@
                 <flux:button icon="trash" class="cursor-pointer" wire:click="delete">
                     Remove
                 </flux:button>
-                @if ($tag->sleepEntries->isNotEmpty())
+                @if ($this->sleepEntries->isNotEmpty())
                     <flux:card>
                         <flux:heading class="mb-2">Average Sleep Rating</flux:heading>
                         <x-tag.rating-diff :tag="$tag" />
                     </flux:card>
                 @endif
                 <flux:card class="space-y-10">
-                    @if ($tag->sleepEntries->isNotEmpty())
-                        @foreach ($tag->sleepEntries as $entry)
+                    @if ($this->sleepEntries->isNotEmpty())
+                        @foreach ($this->sleepEntries as $entry)
                             <x-sleep-entry-display :sleep-entry="$entry" />
                         @endforeach
+                        <flux:pagination :paginator="$this->sleepEntries" />
                     @else
                         <flux:text>No sleep entries belong to this tag</flux:text>
                     @endif
