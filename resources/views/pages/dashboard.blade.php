@@ -100,7 +100,7 @@ new class extends Component
 
 <div>
     <div class="flex h-full w-full flex-1 flex-col gap-4 rounded-xl">
-        <div class="grid grid-cols-2 grid-rows-2 auto-cols-min gap-4">
+        <div class="grid grid-cols-4 grid-rows-[min-content_1fr] auto-cols-min gap-4">
             <flux:card>
                 <flux:text class="mb-2">Avg Sleep Session (prev 7 days)</flux:text>
                 @if ($avgSevenDayInBedBy && $avgSevenDayAwakeAt)
@@ -147,7 +147,13 @@ new class extends Component
                     </flux:chart.svg>
                 </flux:chart>
             </flux:card>
-            {{-- <x-dashboard.latest_five_star_sleep_card /> --}}
+            <div class="col-span-2">
+                <x-dashboard.awake-at-variance />
+            </div>
+
+            <div class="col-span-2">
+                <x-dashboard.bedtime-variance />
+            </div>
         </div>
 
         <div class="grid gap-4 grid-cols-10">
