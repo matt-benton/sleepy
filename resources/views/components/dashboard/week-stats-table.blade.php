@@ -19,13 +19,15 @@
                             </span>
                         </flux:table.cell>
                         <flux:table.cell align="end">
-                            @if ($day['avg_rating'] >= 4)
-                                <flux:badge color="emerald">{{ $day['avg_rating'] }}</flux:badge>
-                            @elseif ($day['avg_rating'] <= 2)
-                                <flux:badge color="rose">{{ $day['avg_rating'] }}</flux:badge>
-                            @else
-                                <flux:badge>{{ $day['avg_rating'] }}</flux:badge>
-                            @endif
+                            <flux:link href="/sleep_entries?day_of_week={{ $day['day_of_week_numeric'] }}" wire:nagivate>
+                                @if ($day['avg_rating'] >= 4)
+                                    <flux:badge color="emerald">{{ $day['avg_rating'] }}</flux:badge>
+                                @elseif ($day['avg_rating'] <= 2)
+                                    <flux:badge color="rose">{{ $day['avg_rating'] }}</flux:badge>
+                                @else
+                                    <flux:badge>{{ $day['avg_rating'] }}</flux:badge>
+                                @endif
+                            </flux:link>
                         </flux:table.cell>
                     </flux:table.row>
                 @endforeach
