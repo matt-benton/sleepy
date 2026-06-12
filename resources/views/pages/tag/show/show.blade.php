@@ -23,22 +23,43 @@
                 <flux:button icon="trash" class="cursor-pointer" wire:click="delete">
                     Remove
                 </flux:button>
+
                 @if ($this->sleepEntries->isNotEmpty())
                     <flux:card>
                         <flux:heading class="mb-2">Average Sleep Rating</flux:heading>
                         <x-tag.rating-diff :tag="$tag" />
                     </flux:card>
                 @endif
-                <flux:card class="space-y-10">
-                    @if ($this->sleepEntries->isNotEmpty())
-                        @foreach ($this->sleepEntries as $entry)
-                            <x-sleep-entry-display :sleep-entry="$entry" />
+
+                <flux:tab.group>
+                    <flux:tabs wire:model="tab">
+                        <flux:tab name="entries">Sleep Entries</flux:tab>
+                        <flux:tab name="keyPoints">Key Points</flux:tab>
+                    </flux:tabs>
+
+                    <flux:tab.panel name="keyPoints" class="space-y-2">
+                        @foreach ($this->allKeyPoints as $keyPoint)
+                            @if ($keyPoint->is_positive)
+                                <flux:callout variant="success" :heading="$keyPoint->text" />
+                            @else
+                                <flux:callout variant="danger" :heading="$keyPoint->text" />
+                            @endif
                         @endforeach
-                        <flux:pagination :paginator="$this->sleepEntries" />
-                    @else
-                        <flux:text>No sleep entries belong to this tag</flux:text>
-                    @endif
-                </flux:card>
+                    </flux:tab.panel>
+
+                    <flux:tab.panel name="entries">
+                        <flux:card class="space-y-10">
+                            @if ($this->sleepEntries->isNotEmpty())
+                                @foreach ($this->sleepEntries as $entry)
+                                    <x-sleep-entry-display :sleep-entry="$entry" />
+                                @endforeach
+                                <flux:pagination :paginator="$this->sleepEntries" />
+                            @else
+                                <flux:text>No sleep entries belong to this tag</flux:text>
+                            @endif
+                        </flux:card>
+                    </flux:tab.panel>
+                </flux:tab.group>
             @endif
         </div>
     </flux:main>

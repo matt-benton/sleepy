@@ -13,6 +13,8 @@ new class extends Component
 
     public $tags = [];
 
+    public string $tab = 'entries';
+
     public function mount(Tag $tag)
     {
         $this->tag = $tag;
@@ -23,6 +25,13 @@ new class extends Component
     public function sleepEntries()
     {
         return $this->tag->sleepEntries()->paginate();
+    }
+
+    #[Computed]
+    public function allKeyPoints()
+    {
+        return $this->sleepEntries->flatMap(fn ($entry) => $entry->keyPoints)
+            ->sortByDesc('is_positive');
     }
 
     public function delete()
