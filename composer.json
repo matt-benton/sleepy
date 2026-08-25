@@ -10,12 +10,12 @@
     "license": "MIT",
     "require": {
         "php": "^8.3",
-        "laravel/fortify": "^1.37",
+        "laravel/fortify": "^1.38",
         "laravel/framework": "^13.27",
         "laravel/tinker": "^3.0",
-        "livewire/flux": "^2.15",
+        "livewire/flux": "^2.17",
         "livewire/flux-pro": "^2.12",
-        "livewire/livewire": "^4.3",
+        "livewire/livewire": "^4.4",
         "symfony/html-sanitizer": "^8.0"
     },
     "require-dev": {
