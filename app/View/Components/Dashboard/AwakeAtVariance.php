@@ -35,7 +35,7 @@ class AwakeAtVariance extends Component
     {
         $targetDate = now($date->getTimezone());
 
-        if ($date->hour < 6) {
+        if ($date->hour < 3) {
             $newDate = $targetDate->addDay();
         } else {
             $newDate = $targetDate;
